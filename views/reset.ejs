@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <title>Register</title>
+</head>
+
+<body>
+  <header>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Convertisseur</a>
+      </div>
+    </nav>
+    
+  </header>
+
+  <main class="min-vh-100 d-flex justify-content-center align-items-center bg-light">
+
+    <section class="w-100" style="max-width: 500px;">
+
+      <h3 class="text-center mb-4">Renseignez ici votre nouveau mot de passe</h3>
+
+      <div class="card shadow p-4">
+        <% if (error) { %>
+          <p style="color: red;">
+            <%= error %>
+          </p>
+          <% } %>
+            <% if (message) { %>
+              <p style="color: rgb(0, 255, 64);">
+                <%= message %>
+              </p>
+              <% } %>
+
+                <form action="/reset/update" method="POST">
+
+                  <div class="mb-3">
+                    <label class=" form-label" for="password">Nouveau mot de passe :</label>
+                    <input class=" form-control" type="password" name="password" id="password" required />
+                    <input type="hidden" name="token" value=" <%= token %>" />
+
+                  </div>
+                  <div class="d-grid">
+                    <button class=" btn btn-primary" type="submit">Valider</button>
+                  </div>
+                </form>
+                <ul class="mt-3 list-unstyled text-center">
+                  <li><a href="/login">Connexion</a></li>
+                
+                </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <%- include('footer'); -%>
+  </footer>
+
+</body>
+
+</html>

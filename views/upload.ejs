@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <title>Upload</title>
+</head>
+
+<body>
+  <header>
+    <!-- NAVIGATION BOOTSTRAP -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/upload">Convertisseur</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+            <a class="nav-link" href="/librairy">Bibliotheque</a>
+            <a class="nav-link" href="/logout">Déconnexion</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+  </header>
+  <main class="min-vh-100 d-flex justify-content-center align-items-center bg-light">
+    <section class="w-100" style="max-width: 500px;">
+
+      <h1 class="text-center mb-4">Convertisser ici vos vidéos</h1>
+      <!-- FORMULAIRE POUR RECUPERER LES DONNEES AVANT CONVERSION -->
+      <div class="card shadow p-4">
+        <!-- GESTION DES MESSAGE ERREUR OU SUCCESS -->
+        <% if (error) { %>
+          <p id="error" style="color: red;">
+            <%= error %>
+          </p>
+          <% } %>
+
+            <% if (message) { %>
+              <p id="error" style="color: rgb(12, 207, 28);">
+                <%= message %>
+              </p>
+              <% } %>
+                <!-- AFFICHAGE DES LA VIDEO CONVERTIE -->
+                <% if (mediaPath) { %>
+                  <video class="card-img-top img-fluid" controls>
+                    <source src="<%= mediaPath %>" type="video/mp4" />
+                    Votre navigateur ne prend pas en charge les vidéos HTML5.
+                  </video>
+                  <% } %>
+
+                    <form action="/upload" method="POST" id="convertForm" enctype="multipart/form-data">
+
+                      <div class="mb-3">
+                        <label class=" form-label" for="title">Titre :</label>
+                        <input class=" form-control" type="text" name="title" required><br>
+
+                      </div>
+
+                      <div class="mb-3">
+                        <label class=" form-label" for="resume">Résumé :</label>
+                        <textarea class=" form-control" name="resume" required></textarea>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class=" form-label" for="media">Uploader votre video ici</label>
+                        <input class=" form-control" type="file" name="media" id="media" accept=".mp4, .webm, .mkv"
+                          required />
+                      </div>
+
+                      <!-- SELECTION DU FORMAT DE CONVERSION -->
+                      <div class="mb-3">
+                        <select class=" form-select" name="format" id="format" onchange="codecOrNot(this.value)"
+                          required>
+                          <option value="">-- Format --</option>
+                          <option value="mkv">mkv</option>
+                          <option value="webm">webm</option>
+                          <option value="mp4">mp4</option>
+                        </select>
+                      </div>
+
+                      <!-- SELECTION DU FORMAT VIDEO-->
+                      <div class="mb-3">
+                        <select class="form-select mt-3" name="codec" id="codec" required>
+                          <option value="">-- Codec --</option>
+                          <option value="libx264">H.264</option>
+                          <option value="libx265">H.265</option>
+                        </select>
+                      </div>
+
+                      <!-- SELECTION DU CODEC VIDEO SI WEBM PAS DE SELECTION DE CODEC-->
+                      <div class="d-grid">
+                        <button id="button-convert" class="btn btn-primary mt-5" type="submit" onclick="loading()">
+                          <span id="convertir">Convertir</span>
+                          <span id="loading" class="spinner-border spinner-border-sm d-none" aria-hidden="true"></span>
+                        </button>
+                      </div>
+
+                    </form>
+      </div>
+    </section>
+
+  </main>
+  <footer>
+    <%- include('footer'); -%>
+  </footer>
+
+  <!-- SCRIPT JS -->
+  <script>
+
+    //AFFICHAGE DU SELECT CODEC EN FONCTION DU FORMAT
+    function codecOrNot(format) {
+      const codecSelect = document.getElementById("codec");
+
+      if (format === "webm") {
+        codecSelect.style.display = "none";
+        codecSelect.removeAttribute('required');
+      } else {
+        codecSelect.style.display = "block";
+        codecSelect.setAttribute('required', true);
+      }
+    }
+
+
+    // GESTION DE L'ATTENTE UTILISATEUR LORS DE LA CONVERSION
+    function loading() {
+
+      const convertForm = document.getElementById("convertForm");
+      const spanConvert = document.getElementById('convertir');
+      const spanLoading = document.getElementById('loading');
+
+      spanConvert.classList.add("d-none");
+      spanLoading.classList.remove("d-none");
+
+    }
+
+    // SUPPRESSION DES MESSAGES APRES CONVERSION
+    document.addEventListener("DOMContentLoaded", function () {
+
+      const error = document.getElementById('error');
+
+      if (error) {
+        setTimeout(() => {
+          error.classList.add('d-none');
+        }, 2000);
+      }
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+
+
+</body>
+
+</html>

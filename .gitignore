@@ -1,0 +1,25 @@
+# Node.js
+node_modules/
+.env
+
+# Base de données SQLite 
+*.sqlite
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+
+# IDE / éditeurs
+.vscode/
+.idea/
+*.swp
+
+# Vidéos
+public/videos/
+
+# Token JWT si stocké temporairement
+*.jwt
+
+# Autres fichiers sensibles personnalisés
+config/local.js
