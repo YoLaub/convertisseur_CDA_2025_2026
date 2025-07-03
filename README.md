@@ -45,6 +45,12 @@ Documentation simple https://sequelize.org/docs/v6/
 ### Environnement:
 - **Node.js** (version 14 ou supérieure recommandée)
 - **FFmpeg** installé et accessible en ligne de commande
+### Brevo:
+- Créer un compte
+- Génerer son API KEY
+- Créer sa template et récupérer son ID
+- Se souvenir de son nom Brevo
+- Renseigner les informations dans le fichier .env
 
 ### Installation de FFmpeg
 
