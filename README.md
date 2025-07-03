@@ -69,8 +69,11 @@ Télécharge et installe depuis le site officiel, puis ajoute ffmpeg au PATH.
     ```bash
     npm install
 
+#### 1. Occupe toi du fichier .env
+- Change ex_env.txt par .env
+- Renseigne les variables Brevo et pense bien à changer la variable SECRET KEY
 
-#### 3. Lancer le projet en développement :
+#### 4. Lancer le projet en développement :
 
 - Dans ton terminal à la racine du projet:
     ```bash

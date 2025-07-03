@@ -1,0 +1,15 @@
+PORT=3000
+
+# Chemin vers la base de données SQLite
+DATABASE_URL=sqlite:./data/database.sqlite
+
+# Clé secrète pour les sessions
+SESSION_SECRET=SECRET_KEY123!
+
+# Clé API Brevo
+# BREVO_API_KEY= [ A DEFINIR ]
+
+# Email de l'expéditeur pour les mails Brevo
+# BREVO_SENDER_EMAIL= [ A DEFINIR ]
+
+RESET_LINK_BASE_URL=http://localhost:3000/reset?token=
