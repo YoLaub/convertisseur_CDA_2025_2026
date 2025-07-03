@@ -8,7 +8,7 @@ const db = new sqlite3.Database('./data/database.sqlite', (err) => {
   console.log('Connexion à la base OK');
 });
 
-db.run('DROP TABLE IF EXISTS ', (err) => {
+db.run('DROP TABLE IF EXISTS Users ', (err) => {
   if (err) return console.error(err.message);
   console.log('Table supprimée avec succès');
 });

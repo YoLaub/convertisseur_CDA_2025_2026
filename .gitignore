@@ -16,7 +16,8 @@ Thumbs.db
 *.swp
 
 # Vidéos
-public/videos/
+encodées/*
+originaux/*
 
 # Token JWT si stocké temporairement
 *.jwt

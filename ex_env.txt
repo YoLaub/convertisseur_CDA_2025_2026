@@ -6,10 +6,15 @@ DATABASE_URL=sqlite:./data/database.sqlite
 # Clé secrète pour les sessions
 SESSION_SECRET=SECRET_KEY123!
 
+#############BREVO################
 # Clé API Brevo
-# BREVO_API_KEY= [ A DEFINIR ]
+BREVO_API_KEY=
 
 # Email de l'expéditeur pour les mails Brevo
-# BREVO_SENDER_EMAIL= [ A DEFINIR ]
+BREVO_SENDER_EMAIL=
 
 RESET_LINK_BASE_URL=http://localhost:3000/reset?token=
+
+TEMPLATE_ID=1
+
+NAME_FOR_EMAIL=

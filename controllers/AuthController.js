@@ -26,7 +26,6 @@ class AuthController {
   static async showPasswordForm(req, res) {
 
     const token = req.query.token;
-    console.log(token)
 
     try {
       const decoded = jwt.decode(token);
@@ -57,9 +56,9 @@ class AuthController {
     const { username, password } = req.body;
     // RECHERCHE SI UN UTILISATEUR EXISTE AVEC L'ORM SEQUELIZE ET SA METHODE DE CLASS findOne({ where: {col: ? } })
     const user = await users.findOne({ where: { username: username } });
-    
+
     // VERIFICATION DU MOT DE PASSE
-    if (user === null ||  !(await user.checkPassword(req.body.password))) {
+    if (user === null || !(await user.checkPassword(req.body.password))) {
       return res.status(401).render('login', { error: 'Identifiants incorrects' });
     }
 
@@ -116,18 +115,18 @@ class AuthController {
       const expires = new Date(Date.now() + 60 * 60 * 1000);
 
       // MISE A JOUR DE L'UTILISATEUR
-      await user.update({ resetToken: token, resetExpires: expires });
+      await users.update({ resetToken: token, resetExpires: expires }, { where: { id: user.id } });
       //DEFINITION DU LIEN DE RESET AVEC LE TOKEN DE RESET
       const resetLink = process.env.RESET_LINK_BASE_URL + token;
 
       // CREATION DE L'OBJET EMAIL
       const emailData = ({
         sender: {
-          name: "John enterprise",
+          name: process.env.NAME_FOR_EMAIL,
           email: process.env.BREVO_SENDER_EMAIL
         },
         to: [{ email }],
-        templateId: 1,
+        templateId: parseInt(process.env.TEMPLATE_ID, 10),
         params: {
           RESET_LINK: resetLink,
           USERNAME: user.email
@@ -164,9 +163,12 @@ class AuthController {
 
       if (user === null) return res.status(400).render("reset", { error: 'Lien invalide ou expiré', message: null, token: null });
 
+      const salt = await bcrypt.genSalt(10);
+      const cryptPassword = await bcrypt.hash(password, salt);
+
       //MISE A JOUR DU MOT DE PASSE DE L'UTILISATEUR
       await user.update({
-        password: password,
+        password: cryptPassword,
         resetToken: null,
         resetExpires: null
       });
